@@ -8,8 +8,7 @@ typedef struct node{
 
 
 
-
-void delete(node *r, int key);
+node *delete(node *r, int key);
 node *transplante(node *remove);
 void inorder(node *r);
 node *insert(node *r, int key);
@@ -94,14 +93,17 @@ void posorder(node *r){
 
 void delete(node *r, int key){
 	node *remov = search(r, key);
-	if(remov == r)
+	if(remov == r){
 		r = transplante(remov);
+		return r;
+	}
 	else{
 		if(remov->raiz-> right == remov)
 			remov->raiz->right = transplante(remov);
 		else
 			remov->raiz->left = transplante(remov);
 	}
+	return r;
 }
 
 node *transplante(node *remove){
@@ -146,7 +148,7 @@ int main (){
 	printf("\n");
 	inorder(r);
 	printf("\n");
-	delete(r, 11);
+	r = delete(r, 11);
 	inorder(r);
 	printf("\n");
 	
