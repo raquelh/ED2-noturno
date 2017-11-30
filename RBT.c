@@ -28,6 +28,10 @@ node *search(node *r, int key);
 void Delete(rbtree *T, int key);
 void Delete_Fixup(rbtree *T, node *x);
 node *min(rbtree *T);
+void print(rbtree *T, node *a);
+void inorder(rbtree *T, node *r);
+void preorder(rbtree *T, node *r);
+void posorder(rbtree *T, node *r);
 
 rbtree * Tree_inicia (){
 	rbtree * nova = (rbtree *)malloc(sizeof(rbtree));
@@ -36,6 +40,40 @@ rbtree * Tree_inicia (){
 	nova->root = nova->nil;
 	return nova;
 } 
+
+void print(rbtree *T, node *a){
+	if(a!=T->nil)
+		printf("%d -",a->key); 	
+	
+}
+
+void inorder(rbtree *T, node *r){
+	if(r!=T->nil){
+		inorder(T, r->left);
+		print(T, r);
+		inorder(T, r->right);
+	}
+	
+		
+}
+
+void preorder(rbtree *T, node *r){
+	if(r!=T->nil){
+		print(T, r);
+		preorder(T, r->left);
+		preorder(T, r->right);
+	}
+}
+
+void posorder(rbtree *T, node *r){
+	if(r!=T->nil){
+		posorder(T, r->left);
+		
+		posorder(T, r->right);
+		print(T, r);
+		
+	}
+}
 
 void  rotate_right(rbtree *T ,node *x){
   node *a,*b;
@@ -303,11 +341,15 @@ int main(){
 	insert(T, 19);
 	insert(T, 20);
 	drawTree(T, T->root, 0);
-	a = search(T->root, 5);
 	a = delete(T, 15);
 	drawTree(T, T->root, 0);
-	a = min(T);
-	printf("\n%d\n", a->key);
+	printf("\nInorder\n");
+	inorder(T, T->root);
+	printf("\nPreorder\n");
+	preorder(T, T->root);
+	printf("\nPosorder\n");
+	posorder(T, T->root);
+	
 	
 	
 	return 0;
